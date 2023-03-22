@@ -20,7 +20,6 @@ public class MemberController {
 	@PostMapping("/signup")
 	public ResponseEntity<Void> registerMember(@RequestBody @Valid MemberReqDto memberReqDto){
 		memberService.signup(memberReqDto);
-		System.out.println("회원가입완료");
 		return ResponseEntity.status(HttpStatus.OK.value()).body(null);
 	}
 }

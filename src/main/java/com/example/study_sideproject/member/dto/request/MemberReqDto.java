@@ -22,5 +22,5 @@ public class MemberReqDto {
 	private String password;
 
 	@NotBlank
-	private String passwordConfirm;
+	private String passwordCheck;
 }
