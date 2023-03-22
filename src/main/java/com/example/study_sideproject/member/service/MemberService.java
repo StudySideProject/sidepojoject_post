@@ -25,9 +25,9 @@ public class MemberService {
 
 		// Error : 이미 이 이메일을 사용하는 유저가 존재하는 경우
 		if(memberRepository.existsByEmail(memberReqDto.getEmail())){
-			throw new GlobalException(ErrorCode.DUPLICATE_MEMBER_EMAIL);
+			throw new GlobalException(ErrorCode.DUPLICATE_EMAIL);
 		}
-		
+
 		// Error : 비빌번호, 비빌번호확인이 일치하지 않는 경우
 		if(!memberReqDto.getPassword().equals(memberReqDto.getPasswordConfirm())){
 			throw new GlobalException(ErrorCode.BAD_PASSWORD_CONFIRM);

@@ -17,8 +17,8 @@ spring:
     # h2
     driver-class-name: org.h2.Driver
     url: jdbc:h2:~/test
-    username: ggggraceful
-    password: test1234
+    username:
+    password:
 
   jpa:
     hibernate:
