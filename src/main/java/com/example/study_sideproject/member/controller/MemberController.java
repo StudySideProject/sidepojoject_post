@@ -1,8 +1,9 @@
 package com.example.study_sideproject.member.controller;
 
-
 import com.example.study_sideproject.member.dto.request.EmailCheckRequestDto;
+import com.example.study_sideproject.member.dto.request.MemberReqDto;
 import com.example.study_sideproject.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK.value()).body(null);
     }
 
+    //이메일 중복 확인
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/emailcheck")
     public ResponseEntity<?> emailCheck(@RequestBody EmailCheckRequestDto emailCheckRequestDto){

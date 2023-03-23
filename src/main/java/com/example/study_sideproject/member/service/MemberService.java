@@ -1,6 +1,9 @@
 package com.example.study_sideproject.member.service;
 
+import com.example.study_sideproject.global.exception.CustomException;
+import com.example.study_sideproject.global.exception.ErrorCode;
 import com.example.study_sideproject.member.dto.request.EmailCheckRequestDto;
+import com.example.study_sideproject.member.dto.request.MemberReqDto;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import com.example.study_sideproject.member.domain.Member;
@@ -36,11 +39,12 @@ public class MemberService {
 		memberRepository.save(member);
 
 	}
-	
+
+	//이메일 중복 확인
     @Transactional
     public void emailCheck(EmailCheckRequestDto emailCheckRequestDto) {
         if (memberRepository.findByEmail(emailCheckRequestDto.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
     }
 	
