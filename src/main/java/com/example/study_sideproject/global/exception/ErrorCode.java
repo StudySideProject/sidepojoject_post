@@ -2,11 +2,14 @@ package com.example.study_sideproject.global.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public enum ErrorCode {
+
+	UNDEFINED_ERROR(HttpStatus.CONFLICT, "E00", "알 수 없는 에러 발생!!!!!!!"),
 
 	// 회원가입
 	DUPLICATE_EMAIL(HttpStatus.CONFLICT, "R01", "이미 사용중인 이메일입니다."),
@@ -22,8 +25,15 @@ public enum ErrorCode {
 	INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "T01", "유효하지 않은 토큰입니다."),
 	NEED_TO_LOGIN(HttpStatus.UNAUTHORIZED, "T02", "토큰이 없습니다.");
 
-	private final HttpStatus httpStatus;
-	private final String code;
-	private final String message;
 
+	private HttpStatus httpStatus;
+	private String code;
+	private String message;
+
+
+	ErrorCode(HttpStatus httpStatus, String code, String message) {
+		this.httpStatus = httpStatus;
+		this.code = code;
+		this.message = message;
+	}
 }
