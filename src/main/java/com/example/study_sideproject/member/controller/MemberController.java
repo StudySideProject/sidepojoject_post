@@ -1,6 +1,6 @@
 package com.example.study_sideproject.member.controller;
 
-import com.example.study_sideproject.member.dto.request.MemberReqDto;
+import com.example.study_sideproject.member.dto.request.SignUpMemberReqDto;
 import com.example.study_sideproject.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,8 @@ public class MemberController {
 
 	// 회원가입
 	@PostMapping("/signup")
-	public ResponseEntity<Void> registerMember(@RequestBody @Valid MemberReqDto memberReqDto){
-		memberService.signup(memberReqDto);
+	public ResponseEntity<Void> registerMember(@RequestBody @Valid SignUpMemberReqDto signUpReqDto){
+		memberService.signup(signUpReqDto);
 		return ResponseEntity.status(HttpStatus.OK.value()).body(null);
 	}
 }
