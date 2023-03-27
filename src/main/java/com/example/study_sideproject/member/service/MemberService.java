@@ -1,11 +1,7 @@
 package com.example.study_sideproject.member.service;
 
-import com.example.study_sideproject.global.exception.CustomException;
-import com.example.study_sideproject.global.exception.ErrorCode;
 import com.example.study_sideproject.member.domain.Member;
-import com.example.study_sideproject.member.dto.request.SignUpMemberReqDto;
-import com.example.study_sideproject.member.exception.customexception.InvalidIDFormException;
-import com.example.study_sideproject.member.exception.customexception.InvalidPasswordFormException;
+import com.example.study_sideproject.member.dto.request.MemberReqDto;
 import com.example.study_sideproject.member.exception.customexception.MemberEamilAlreadyExistsException;
 import com.example.study_sideproject.member.exception.customexception.WrongPasswordCornfirmException;
 import com.example.study_sideproject.member.repository.MemberRepository;
@@ -24,42 +20,26 @@ public class MemberService {
 
 	//회원가입
 	@Transactional
-	public void signup(SignUpMemberReqDto signUpReqDto) {
+	public void signup(MemberReqDto memberReqDto) {
 
-		validateMemberSignUpInfo(signUpReqDto);
-		signUpReqDto.setPassword(passwordEncoder.encode(signUpReqDto.getPassword()));
+		validateMemberSignUpInfo(memberReqDto);
+		memberReqDto.setPassword(passwordEncoder.encode(memberReqDto.getPassword()));
 
 		Member member = Member.builder()
-				.email(signUpReqDto.getEmail())
-				.password(passwordEncoder.encode(signUpReqDto.getPassword()))
+				.email(memberReqDto.getEmail())
+				.password(passwordEncoder.encode(memberReqDto.getPassword()))
 				.build();
 		memberRepository.save(member);
 
 	}
 
-	private void validateMemberSignUpInfo(SignUpMemberReqDto signUpReqDto) {
-
-		if(memberRepository.existsByEmail(signUpReqDto.getEmail()))
+	private void validateMemberSignUpInfo(MemberReqDto memberReqDto) {
+		if(memberRepository.existsByEmail(memberReqDto.getEmail()))
 			throw new MemberEamilAlreadyExistsException();
-		if(!isValidUserEamil(signUpReqDto.getEmail()))
-			throw new InvalidIDFormException();
-		if(!isValidPassword(signUpReqDto.getPassword()))
-			throw new InvalidPasswordFormException();
-		if(!signUpReqDto.getPassword().equals(signUpReqDto.getPasswordCheck())){
+		if(!memberReqDto.getPassword().equals(memberReqDto.getPasswordCheck())){
 			throw new WrongPasswordCornfirmException();
 		}
 
-	}
-
-
-	private boolean isValidUserEamil(String email) {
-		String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
-		return email.matches(regex);
-	}
-
-	private boolean isValidPassword(String password) {
-		String regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,16}$";
-		return password.matches(regex);
 	}
 
 }
