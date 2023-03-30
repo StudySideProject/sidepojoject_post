@@ -68,7 +68,7 @@ public class SecurityConfig {
 
 				.and()
 				.authorizeHttpRequests()
-				.requestMatchers("/login", "/signup").permitAll()
+				.requestMatchers("/login", "/signup", "/emailcheck").permitAll()
 				.requestMatchers(PathRequest.toH2Console()).permitAll()
 				.anyRequest().authenticated()
 
