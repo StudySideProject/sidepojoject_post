@@ -25,5 +25,4 @@ public class Member extends BaseTimeEntity {
 	@JsonIgnore
 	@Column(nullable = false)
 	private String password;
-
 }

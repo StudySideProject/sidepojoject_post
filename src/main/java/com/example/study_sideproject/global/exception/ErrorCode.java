@@ -13,7 +13,7 @@ public enum ErrorCode {
 
 	// 회원가입
 	DUPLICATE_EMAIL(HttpStatus.CONFLICT, "R01", "이미 사용중인 이메일입니다."),
-	WRONG_PASSWORD_CONFIRM(HttpStatus.CONFLICT, "R02","비밀번호가 일치하지 않습니다." ),
+	WRONG_PASSWORD_CONFIRM(HttpStatus.CONFLICT, "R02", "비밀번호가 일치하지 않습니다."),
 	INVALID_ID_FORM(HttpStatus.BAD_REQUEST, "R03", "아이디 형식이 맞지 않습니다."),
 	INVALID_PASSWORD_FORM(HttpStatus.BAD_REQUEST, "R04", "비밀번호 형식이 맞지 않습니다."),
 
