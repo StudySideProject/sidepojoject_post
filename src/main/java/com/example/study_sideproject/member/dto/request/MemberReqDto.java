@@ -1,17 +1,11 @@
 package com.example.study_sideproject.member.dto.request;
 
-import com.example.study_sideproject.member.domain.Member;
-import com.example.study_sideproject.member.dto.AuthorityDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Data
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,16 +23,4 @@ public class MemberReqDto {
     @NotBlank(message = "패스워드 확인을 입력해 주세요.")
     private String passwordCheck;
 
-    private Set<AuthorityDto> authorityDtoSet;
-
-    public static MemberReqDto from(Member member) {
-        if (member == null) return null;
-
-        return MemberReqDto.builder()
-                .email(member.getEmail())
-                .authorityDtoSet(member.getAuthorities().stream()
-                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
-                        .collect(Collectors.toSet()))
-                .build();
-    }
 }
