@@ -87,17 +87,17 @@ public class PostService {
 		return memberRepository.findByEmail(email).orElseThrow(MemberInfoNotExistException::new);
 	}
 
-	//
+	// 게시글이 존재하는지 확인
 	private Post getPostIfExists(Long id) {
 		// mysql에서 해당 id에 해당하는 post가 없을 경우 예외발생, 있으면 post 정보를 가져온다.
 		return postRepository.findById(id).orElseThrow(PostInfoNotExistException::new);
 	}
 
-	// 게시글이 존재하는지, 게시글 작성자인지 확인
+	// 게시글 작성자인지 확인
 	private Post validateAuthor(Long id) {
-		postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
-		String email = getMemberIfExists().getEmail();
-		return postRepository.findByIdAndMemberEmail(id, email).orElseThrow(
+		getPostIfExists(id);
+		Long memberId = getMemberIfExists().getId();
+		return postRepository.findByIdAndMemberId(id, memberId).orElseThrow(
 				() -> new CustomException(ErrorCode.NOT_AUTHOR));
 	}
 }
