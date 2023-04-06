@@ -14,7 +14,7 @@ public class SecurityUtil {
 
    private SecurityUtil() {}
    // 이메일 얻어올 때 사용
-   public static Optional<String> getCurrentUsername() {
+   public static Optional<String> getCurrentUserEmail() {
       final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
       if (authentication == null) {
