@@ -10,9 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberReqDto {
-    public static final String EMAIL_REGEX = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$"; // 이메일
-    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,16}$"; // 소문자, 숫자, 특수문자
-
 
     @Pattern(regexp = EMAIL_REGEX, message = "이메일 형식으로 입력해 주세요.")
     private String email;
@@ -22,5 +19,10 @@ public class MemberReqDto {
 
     @NotBlank(message = "패스워드 확인을 입력해 주세요.")
     private String passwordCheck;
+
+
+
+    public static final String EMAIL_REGEX = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$"; // 이메일
+    public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,16}$"; // 소문자, 숫자, 특수문자
 
 }
