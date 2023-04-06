@@ -1,13 +1,15 @@
 package com.example.study_sideproject.post.service;
 
-import com.example.study_sideproject.global.jwt.SecurityUtil;
 import com.example.study_sideproject.global.exception.CustomException;
 import com.example.study_sideproject.global.exception.ErrorCode;
+import com.example.study_sideproject.global.jwt.SecurityUtil;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
+import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.exception.customException.MemberInfoNotExistException;
+import com.example.study_sideproject.post.exception.customException.PostInfoNotExistException;
 import com.example.study_sideproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,23 @@ public class PostService {
 		postRepository.save(post);
 	}
 
+
+	// 게시글 상세 조회
+	@Transactional(readOnly = true)
+	public PostResponseDto getOnePost(Long id){
+
+		Post post = getPostIfExists(id);
+
+		return PostResponseDto.builder()
+				.id(post.getId())
+				.title(post.getTitle())
+				.content(post.getContent())
+				.createdAt(post.getCreatedAt())
+				.modifiedAt(post.getModifiedAt())
+				.build();
+	}
+
+	
 	// 게시글 수정
 	@Transactional
 	public void updatePost(Long id, PostReqDto postReqDto) {
@@ -52,26 +71,18 @@ public class PostService {
 		postRepository.deleteById(post.getId());
 	}
 
-
-
 	// 유효한 멤버인지 검증
 	private Member getMemberIfExists() {
+		// 현재 로그인한 사람이 있을 경우 해당 회원의 email을 가져온다.
+		String email = SecurityUtil.getCurrentUserEmail().orElseThrow(MemberInfoNotExistException::new);
+		// mysql에서 해당 email을 가진 회원이 없을 경우 예외발생, 있으면 회원 정보를 가져온다.
+		return memberRepository.findByEmail(email).orElseThrow(MemberInfoNotExistException::new);
+	}
 
-		// 이미 생성되어 있는 SecurityUtil에 getCurrentUsername()를 가입된 이메일인지 검증하기 위해 사용
-		Optional<String> emailOptional = SecurityUtil.getCurrentUsername();
-
-		if (emailOptional.isPresent()) { // 객체 존재여부를 확인
-
-			String email = emailOptional.get();
-			Optional<Member> memberOptional = memberRepository.findByEmail(email);
-
-			// 가입한 멤버가 아닐 경우2 : 비어 있을 때
-			if (memberOptional.isEmpty()) {
-				throw new MemberInfoNotExistException();
-			} else return memberOptional.get();
-
-		// 가입한 멤버가 아닐 경우1 : 존재하지 않을 때
-		} else throw new MemberInfoNotExistException();
+	//
+	private Post getPostIfExists(Long id) {
+		// mysql에서 해당 id에 해당하는 post가 없을 경우 예외발생, 있으면 post 정보를 가져온다.
+		return postRepository.findById(id).orElseThrow(PostInfoNotExistException::new);
 	}
 
 	// 게시글이 존재하는지, 게시글 작성자인지 확인
