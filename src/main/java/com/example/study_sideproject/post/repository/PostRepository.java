@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
 	boolean existsById(Long id);
-    Optional<Post> findByIdAndMemberEmail(Long id, String email);
+    Optional<Post> findByIdAndMemberId(Long postId, Long memberId);
 }
