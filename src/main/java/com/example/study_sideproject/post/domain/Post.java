@@ -2,6 +2,7 @@ package com.example.study_sideproject.post.domain;
 
 import com.example.study_sideproject.global.BaseTimeEntity;
 import com.example.study_sideproject.member.domain.Member;
+import com.example.study_sideproject.post.dto.request.PostReqDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -34,4 +35,8 @@ public class Post extends BaseTimeEntity {
     @ManyToOne(fetch = LAZY)
     private Member member;
 
+    public void updatePost (PostReqDto postReqDto){
+        this.title = postReqDto.getTitle();
+        this.content = postReqDto.getContent();
+    }
 }

@@ -59,7 +59,7 @@ public class MemberController {
     //이메일 중복 확인
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/emailcheck")
-    public ResponseEntity<?> emailCheck(@RequestBody EmailCheckRequestDto emailCheckRequestDto){
+    public ResponseEntity<?> emailCheck(@Valid @RequestBody EmailCheckRequestDto emailCheckRequestDto){
         memberService.emailCheck(emailCheckRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

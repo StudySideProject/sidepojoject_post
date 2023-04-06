@@ -5,16 +5,13 @@ import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
-import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.exception.customException.MemberInfoNotExistException;
 import com.example.study_sideproject.post.exception.customException.PostInfoNotExistException;
 import com.example.study_sideproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -55,8 +52,23 @@ public class PostService {
 				.build();
 	}
 
+	
+	// 게시글 수정
+	@Transactional
+	public void updatePost(Long id, PostReqDto postReqDto) {
+		Post post = validateAuthor(id);
+		post.updatePost(postReqDto);
+	}
 
 
+	// 게시글 삭제
+	@Transactional
+	public void deletePost(Long id) {
+		Post post = validateAuthor(id);
+		postRepository.deleteById(post.getId());
+	}
+
+	// 유효한 멤버인지 검증
 	private Member getMemberIfExists() {
 		// 현재 로그인한 사람이 있을 경우 해당 회원의 email을 가져온다.
 		String email = SecurityUtil.getCurrentUserEmail().orElseThrow(MemberInfoNotExistException::new);
@@ -64,8 +76,17 @@ public class PostService {
 		return memberRepository.findByEmail(email).orElseThrow(MemberInfoNotExistException::new);
 	}
 
+	//
 	private Post getPostIfExists(Long id) {
 		// mysql에서 해당 id에 해당하는 post가 없을 경우 예외발생, 있으면 post 정보를 가져온다.
 		return postRepository.findById(id).orElseThrow(PostInfoNotExistException::new);
+	}
+
+	// 게시글이 존재하는지, 게시글 작성자인지 확인
+	private Post validateAuthor(Long id) {
+		postRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_EXIST));
+		String email = getMemberIfExists().getEmail();
+		return postRepository.findByIdAndMemberEmail(id, email).orElseThrow(
+				() -> new CustomException(ErrorCode.NOT_AUTHOR));
 	}
 }

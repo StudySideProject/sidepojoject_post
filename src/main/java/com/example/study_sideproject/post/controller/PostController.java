@@ -1,24 +1,27 @@
 package com.example.study_sideproject.post.controller;
 
+import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
-import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.service.PostService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 public class PostController {
 
 	private final PostService postService;
-
 	// 게시글 작성
 	@PostMapping("/posts")
 	public ResponseEntity<Void> createPost(@RequestBody PostReqDto postReqDto) {
 		postService.createPost(postReqDto);
 		return ResponseEntity.status(HttpStatus.OK.value()).body(null);}
+
 
 	// 게시글 상세 조회
 	@GetMapping("/posts/{id}")
@@ -26,4 +29,20 @@ public class PostController {
 		PostResponseDto postResponseDto = postService.getOnePost(postId);
 		return ResponseEntity.status(HttpStatus.OK.value()).body(postResponseDto);
 	}
+
+
+    // 게시글 수정
+    @PutMapping("/posts/{id}")
+    public ResponseEntity<Void> updatePost(@PathVariable Long id, @RequestBody PostReqDto postReqDto) {
+        postService.updatePost(id, postReqDto);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+
+    // 게시글 삭제
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        postService.deletePost(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }
