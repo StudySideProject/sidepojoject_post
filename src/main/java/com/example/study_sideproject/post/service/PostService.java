@@ -1,18 +1,12 @@
 package com.example.study_sideproject.post.service;
 
 import com.example.study_sideproject.global.jwt.SecurityUtil;
-import com.example.study_sideproject.global.jwt.TokenProvider;
 import com.example.study_sideproject.member.domain.Member;
-import com.example.study_sideproject.member.dto.request.EmailCheckRequestDto;
-import com.example.study_sideproject.member.dto.request.MemberReqDto;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
-import com.example.study_sideproject.post.exception.customException.AccessTokenNotExistException;
-import com.example.study_sideproject.post.exception.customException.AccessTokenNotValidException;
 import com.example.study_sideproject.post.exception.customException.MemberInfoNotExistException;
 import com.example.study_sideproject.post.repository.PostRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
