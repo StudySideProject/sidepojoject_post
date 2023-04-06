@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
 	}
 
-	// 400대 에러
+	// CustomException
 	@ExceptionHandler(CustomException.class)
 	public ResponseEntity<Object> handleCustomException(CustomException e) {
 		ErrorCode errorCode = e.getErrorCode();

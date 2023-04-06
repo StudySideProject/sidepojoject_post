@@ -25,7 +25,6 @@ public enum ErrorCode {
 	INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "T01", "유효하지 않은 토큰입니다."),
 	NEED_TO_LOGIN(HttpStatus.UNAUTHORIZED, "T02", "토큰이 없습니다.");
 
-
 	private HttpStatus httpStatus;
 	private String code;
 	private String message;
