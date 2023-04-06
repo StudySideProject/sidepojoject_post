@@ -1,11 +1,8 @@
 package com.example.study_sideproject.global.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@RequiredArgsConstructor
 @Getter
 public enum ErrorCode {
 
@@ -23,11 +20,16 @@ public enum ErrorCode {
 
 	// 로그인 필요
 	INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "T01", "유효하지 않은 토큰입니다."),
-	NEED_TO_LOGIN(HttpStatus.UNAUTHORIZED, "T02", "토큰이 없습니다.");
+	NEED_TO_LOGIN(HttpStatus.UNAUTHORIZED, "T02", "토큰이 없습니다."),
 
-	private HttpStatus httpStatus;
-	private String code;
-	private String message;
+	// 게시글
+	POST_NOT_EXIST(HttpStatus.BAD_REQUEST, "P01","게시글이 존재하지 않습니다."),
+	NOT_AUTHOR(HttpStatus.UNAUTHORIZED,"P02","게시글 작성자가 아닙니다.");
+
+
+	private final HttpStatus httpStatus;
+	private final String code;
+	private final String message;
 
 
 	ErrorCode(HttpStatus httpStatus, String code, String message) {
