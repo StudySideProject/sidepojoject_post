@@ -12,11 +12,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AllPostResDto {
 
+    private Long id;
     private String title;
     private String author;
     private LocalDateTime modifiedAt;
 
     public AllPostResDto(Post post) {
+        this.id = post.getId();
         this.title = post.getTitle();
         this.author = post.getMember().getEmail();
         this.modifiedAt = post.getModifiedAt();
