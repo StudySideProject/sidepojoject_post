@@ -19,8 +19,12 @@ public enum ErrorCode {
 	ID_NOT_EXIST(HttpStatus.BAD_REQUEST, "L02", "아이디가 존재하지 않습니다."),
 
 	// 로그인 필요
-	INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "T01", "유효하지 않은 토큰입니다."),
-	NEED_TO_LOGIN(HttpStatus.UNAUTHORIZED, "T02", "토큰이 없습니다."),
+	NEED_TO_LOGIN(HttpStatus.UNAUTHORIZED, "T01", "토큰이 없습니다."),
+	WRONG_TYPE_TOKEN(HttpStatus.UNAUTHORIZED, "T02", "잘못된 타입의 토큰입니다."),
+	EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "T03", "만료된 토큰입니다."),
+	UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "T04", "지원되지 않는 토큰입니다."),
+	WRONG_TOKEN(HttpStatus.UNAUTHORIZED, "T05", "잘못된 토큰입니다."),
+
 
 	// 게시글
 	POST_NOT_EXIST(HttpStatus.BAD_REQUEST, "P01","게시글이 존재하지 않습니다."),
