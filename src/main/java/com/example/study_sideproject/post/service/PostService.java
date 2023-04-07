@@ -7,6 +7,7 @@ import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
+import com.example.study_sideproject.post.dto.response.AllPostResDto;
 import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.exception.customException.MemberInfoNotExistException;
 import com.example.study_sideproject.post.exception.customException.PostInfoNotExistException;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor // final이나 @NonNull인 필드 값만 파라미터로 받는 생성자 생성
@@ -39,6 +40,13 @@ public class PostService {
 		postRepository.save(post);
 	}
 
+	//게시글 전체 조회
+	@Transactional
+	public List<AllPostResDto> getAllPost() {
+		List<Post> postList = postRepository.findAll();
+		return postList.stream()
+				.map(AllPostResDto::new).toList();
+	}
 
 	// 게시글 상세 조회
 	@Transactional(readOnly = true)
@@ -55,7 +63,7 @@ public class PostService {
 				.build();
 	}
 
-	
+
 	// 게시글 수정
 	@Transactional
 	public void updatePost(Long id, PostReqDto postReqDto) {
