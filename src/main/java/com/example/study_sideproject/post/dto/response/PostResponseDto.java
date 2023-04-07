@@ -16,7 +16,7 @@ public class PostResponseDto {
 	private Long id;
 	private String title;
 	private String content;
-	private LocalDateTime createdAt;
+	private String email;
 	private LocalDateTime modifiedAt;
 
 }

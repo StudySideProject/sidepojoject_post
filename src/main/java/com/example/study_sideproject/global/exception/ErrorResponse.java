@@ -19,4 +19,10 @@ public class ErrorResponse {
         this.code = code.getCode();
         this.errorMessage = code.getMessage();
     }
+
+
+    public ErrorResponse(String code, String errorMessage) {
+        this.code = code;
+        this.errorMessage = errorMessage;
+    }
 }
