@@ -23,7 +23,7 @@ public enum ErrorCode {
 	WRONG_TYPE_TOKEN(HttpStatus.UNAUTHORIZED, "T02", "잘못된 타입의 토큰입니다."),
 	EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "T03", "만료된 토큰입니다."),
 	UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "T04", "지원되지 않는 토큰입니다."),
-	WRONG_TOKEN(HttpStatus.UNAUTHORIZED, "T05", "잘못된 토큰입니다."),
+	WRONG_TOKEN(HttpStatus.UNAUTHORIZED, "T05", "시그니처가 일치하지 않는 토큰입니다."),
 
 
 	// 게시글
