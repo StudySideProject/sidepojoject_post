@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // final이나 @NonNull인 필드 값만 파라미터로 받는 생성자 생성
@@ -58,12 +59,12 @@ public class PostService {
 				.id(post.getId())
 				.title(post.getTitle())
 				.content(post.getContent())
-				.createdAt(post.getCreatedAt())
+				.email(post.getMember().getEmail())
 				.modifiedAt(post.getModifiedAt())
 				.build();
 	}
 
-
+	
 	// 게시글 수정
 	@Transactional
 	public void updatePost(Long id, PostReqDto postReqDto) {
