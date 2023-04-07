@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    Optional<Post> findByIdAndMemberEmail(Long id, String email);
+    Optional<Post> findByIdAndMemberId(Long id, Long memberId);
 	boolean existsById(Long id);
 
 }
