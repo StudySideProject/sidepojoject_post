@@ -6,8 +6,8 @@ import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.dto.request.EmailCheckRequestDto;
 import com.example.study_sideproject.member.dto.request.LoginReqDto;
 import com.example.study_sideproject.member.dto.request.MemberReqDto;
-import com.example.study_sideproject.member.exception.customException.MemberEamilAlreadyExistsException;
-import com.example.study_sideproject.member.exception.customException.WrongPasswordCornfirmException;
+import com.example.study_sideproject.member.exception.customException.MemberEmailAlreadyExistsException;
+import com.example.study_sideproject.member.exception.customException.WrongPasswordConfirmException;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,15 +40,15 @@ public class MemberService {
     @Transactional
     public void emailCheck(EmailCheckRequestDto emailCheckRequestDto) {
         if (memberRepository.findByEmail(emailCheckRequestDto.getEmail()).isPresent()) {
-            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+            throw new MemberEmailAlreadyExistsException();
         }
     }
 
 	private void validateMemberSignUpInfo(MemberReqDto memberReqDto) {
 		if(memberRepository.existsByEmail(memberReqDto.getEmail()))
-			throw new MemberEamilAlreadyExistsException();
+			throw new MemberEmailAlreadyExistsException();
 		if(!memberReqDto.getPassword().equals(memberReqDto.getPasswordCheck())){
-			throw new WrongPasswordCornfirmException();
+			throw new WrongPasswordConfirmException();
 		}
 	}
 
