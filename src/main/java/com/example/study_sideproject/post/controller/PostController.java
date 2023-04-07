@@ -1,14 +1,15 @@
 package com.example.study_sideproject.post.controller;
 
-import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
+import com.example.study_sideproject.post.dto.response.AllPostResDto;
 import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.service.PostService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +22,12 @@ public class PostController {
 		postService.createPost(postReqDto);
 		return ResponseEntity.status(HttpStatus.OK.value()).body(null);}
 
+	//게시글 전체 조회
+	@GetMapping("/posts")
+	public ResponseEntity<List<AllPostResDto>> getAllPost(){
+		List<AllPostResDto> allPostResDto = postService.getAllPost();
+		return ResponseEntity.status(HttpStatus.OK.value()).body(allPostResDto);
+	}
 
 	// 게시글 상세 조회
 	@GetMapping("/posts/{id}")
