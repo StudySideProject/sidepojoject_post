@@ -9,6 +9,7 @@ import com.example.study_sideproject.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +30,12 @@ public class CommentService {
                 .post(post)
                 .build();
         commentRepository.save(comment);
+    }
+
+    // 댓글 삭제
+    @Transactional
+    public void deleteComment(Long commentId) {
+//        Comment comment = validateCheck.validatecommenter(commentId);
+//        commentRepository.deleteById(comment.getId());
     }
 }
