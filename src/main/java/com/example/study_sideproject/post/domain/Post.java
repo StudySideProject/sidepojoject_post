@@ -24,11 +24,9 @@ public class Post extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, length = 20) // SQL Column 길이를 설정하는 데 사용, 단 유효성 검사는 해주지 않음
-    @Size(min = 3, max = 20) // 유효성 검사를 위해 사용
     private String title;
 
     @Column(nullable = false, length = 500)
-    @Size(min = 10, max = 500)
     private String content;
 
     @JoinColumn(name = "member_id", nullable = false)

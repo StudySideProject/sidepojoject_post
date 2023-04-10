@@ -4,11 +4,10 @@ import com.example.study_sideproject.post.dto.request.PostReqDto;
 import com.example.study_sideproject.post.dto.response.AllPostResDto;
 import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.service.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class PostController {
 	private final PostService postService;
 	// 게시글 작성
 	@PostMapping("/posts")
-	public ResponseEntity<Void> createPost(@RequestBody PostReqDto postReqDto) {
+	public ResponseEntity<Void> createPost(@RequestBody @Valid PostReqDto postReqDto) {
 		postService.createPost(postReqDto);
 		return ResponseEntity.status(HttpStatus.OK.value()).body(null);}
 

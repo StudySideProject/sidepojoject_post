@@ -1,6 +1,6 @@
 package com.example.study_sideproject.post.dto.request;
 
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // 모든 필드 값을 파라미터로 받는 생성자 생성
 public class PostReqDto {
 
+	@Size(min = 3, max = 20) // 유효성 검사를 위해 사용
 	private String title;
+
+	@Size(min = 10, max = 500)
 	private String content;
 
 }
