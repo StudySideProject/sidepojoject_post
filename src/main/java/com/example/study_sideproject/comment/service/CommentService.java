@@ -21,7 +21,6 @@ public class CommentService {
     public void createComment(Long postId, CommentReqDto commentReqDto) {
         Member member = validateCheck.getMemberIfExists();
         Post post = validateCheck.getPostIfExists(postId);
-        System.out.println(commentReqDto.getContent());
 
         Comment comment = Comment.builder()
                 .content(commentReqDto.getContent())
