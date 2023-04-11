@@ -4,7 +4,9 @@ import com.example.study_sideproject.comment.dto.CommentReqDto;
 import com.example.study_sideproject.comment.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,5 +28,12 @@ public class CommentController {
                                                              @RequestBody @Valid CommentReqDto commentReqDto){
         commentService.updateComment(commentId, commentReqDto);
         return ResponseEntity.ok().body(null);
+    }
+
+    // 댓글 삭제
+    @DeleteMapping("comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

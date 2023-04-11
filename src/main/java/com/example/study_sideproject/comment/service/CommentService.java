@@ -2,6 +2,7 @@ package com.example.study_sideproject.comment.service;
 
 import com.example.study_sideproject.comment.domain.Comment;
 import com.example.study_sideproject.comment.dto.CommentReqDto;
+import com.example.study_sideproject.comment.dto.CommentResDto;
 import com.example.study_sideproject.comment.repository.CommentRepository;
 import com.example.study_sideproject.global.ValidateCheck;
 import com.example.study_sideproject.member.domain.Member;
@@ -9,6 +10,9 @@ import com.example.study_sideproject.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +41,14 @@ public class CommentService {
         Comment comment = validateCheck.getCommentIfExists(commentId);
         comment.updateComment(commentReqDto);
     }
+
+    // 댓글 삭제
+    @Transactional
+    public void deleteComment(Long commentId) {
+        validateCheck.validateCommenter(commentId);
+        Comment comment = validateCheck.getCommentIfExists(commentId);
+        commentRepository.deleteById(comment.getId());
+    }
+
+
 }
