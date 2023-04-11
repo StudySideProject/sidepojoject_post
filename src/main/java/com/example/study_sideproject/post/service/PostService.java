@@ -16,14 +16,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // final이나 @NonNull인 필드 값만 파라미터로 받는 생성자 생성
 public class PostService {
 
     private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
     private final ValidateCheck validateCheck;
     private final CommentRepository commentRepository;
 

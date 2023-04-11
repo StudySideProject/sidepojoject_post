@@ -1,14 +1,20 @@
 package com.example.study_sideproject.post.domain;
 
+import com.example.study_sideproject.comment.domain.Comment;
 import com.example.study_sideproject.global.BaseTimeEntity;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -32,6 +38,11 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "member_id", nullable = false)
     @ManyToOne(fetch = LAZY)
     private Member member;
+
+    @OneToMany(fetch = LAZY,
+            mappedBy = "post",
+            cascade =  {CascadeType.PERSIST, CascadeType.REMOVE}) // 부모 엔티티를 삭제하면 자식 엔티티 삭제
+    private List<Comment> comment = new ArrayList<>();
 
     public void updatePost (PostReqDto postReqDto){
         this.title = postReqDto.getTitle();
