@@ -45,8 +45,9 @@ public class CommentService {
     // 댓글 삭제
     @Transactional
     public void deleteComment(Long commentId) {
-//        Comment comment = validateCheck.validatecommenter(commentId);
-//        commentRepository.deleteById(comment.getId());
+        validateCheck.validateCommenter(commentId);
+        Comment comment = validateCheck.getCommentIfExists(commentId);
+        commentRepository.deleteById(comment.getId());
     }
 
 
