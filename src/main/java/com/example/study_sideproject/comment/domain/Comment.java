@@ -1,8 +1,10 @@
 package com.example.study_sideproject.comment.domain;
 
+import com.example.study_sideproject.comment.dto.CommentReqDto;
 import com.example.study_sideproject.global.BaseTimeEntity;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.domain.Post;
+import com.example.study_sideproject.post.dto.request.PostReqDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,4 +32,8 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    public void updateComment (CommentReqDto commentReqDto){
+        this.content = commentReqDto.getContent();
+    }
 }

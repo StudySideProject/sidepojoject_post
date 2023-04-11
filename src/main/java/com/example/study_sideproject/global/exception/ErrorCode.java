@@ -28,8 +28,11 @@ public enum ErrorCode {
 
 	// 게시글
 	POST_NOT_EXIST(HttpStatus.BAD_REQUEST, "P01","게시글이 존재하지 않습니다."),
-	NOT_AUTHOR(HttpStatus.UNAUTHORIZED,"P02","게시글 작성자가 아닙니다.");
+	NOT_AUTHOR(HttpStatus.UNAUTHORIZED,"P02","게시글 작성자가 아닙니다."),
 
+	//댓글
+	COMMENT_NOT_EXIST(HttpStatus.BAD_REQUEST, "C01", "댓글이 존재하지 않습니다."),
+	NOT_COMMENTER(HttpStatus.UNAUTHORIZED, "C02", "댓글 작성자가 아닙니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

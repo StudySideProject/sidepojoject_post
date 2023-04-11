@@ -29,4 +29,12 @@ public class CommentService {
                 .build();
         commentRepository.save(comment);
     }
+
+    //댓글 수정
+    @Transactional
+    public void updateComment(Long commentId, CommentReqDto commentReqDto) {
+        validateCheck.validateCommenter(commentId);
+        Comment comment = validateCheck.getCommentIfExists(commentId);
+        comment.updateComment(commentReqDto);
+    }
 }
