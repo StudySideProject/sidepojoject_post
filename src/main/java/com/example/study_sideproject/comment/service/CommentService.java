@@ -21,7 +21,6 @@ public class CommentService {
     public void createComment(Long postId, CommentReqDto commentReqDto) {
         Member member = validateCheck.getMemberIfExists();
         Post post = validateCheck.getPostIfExists(postId);
-        System.out.println(commentReqDto.getContent());
 
         Comment comment = Comment.builder()
                 .content(commentReqDto.getContent())
@@ -29,5 +28,13 @@ public class CommentService {
                 .post(post)
                 .build();
         commentRepository.save(comment);
+    }
+
+    //댓글 수정
+    @Transactional
+    public void updateComment(Long commentId, CommentReqDto commentReqDto) {
+        validateCheck.validateCommenter(commentId);
+        Comment comment = validateCheck.getCommentIfExists(commentId);
+        comment.updateComment(commentReqDto);
     }
 }

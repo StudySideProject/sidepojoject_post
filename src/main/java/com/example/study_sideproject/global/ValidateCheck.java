@@ -1,13 +1,16 @@
 package com.example.study_sideproject.global;
 
+import com.example.study_sideproject.comment.domain.Comment;
+import com.example.study_sideproject.comment.repository.CommentRepository;
 import com.example.study_sideproject.global.exception.CustomException;
 import com.example.study_sideproject.global.exception.ErrorCode;
+import com.example.study_sideproject.global.exception.customException.CommentNotExistException;
 import com.example.study_sideproject.global.jwt.SecurityUtil;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
-import com.example.study_sideproject.post.exception.customException.MemberInfoNotExistException;
-import com.example.study_sideproject.post.exception.customException.PostInfoNotExistException;
+import com.example.study_sideproject.global.exception.customException.MemberInfoNotExistException;
+import com.example.study_sideproject.global.exception.customException.PostInfoNotExistException;
 import com.example.study_sideproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class ValidateCheck {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     // 유효한 멤버인지 검증
     public Member getMemberIfExists() {
@@ -38,5 +42,19 @@ public class ValidateCheck {
         Long memberId = getMemberIfExists().getId();
         return postRepository.findByIdAndMemberId(id, memberId).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_AUTHOR));
+    }
+
+    //댓글 작성자인지 확인
+    public void validateCommenter(Long id) {
+        getCommentIfExists(id);
+        Long memberId = getMemberIfExists().getId();
+        commentRepository.findByIdAndMemberId(id, memberId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_COMMENTER)
+        );
+    }
+
+    //댓글이 존재하는지 확인
+    public Comment getCommentIfExists(Long id) {
+        return commentRepository.findById(id).orElseThrow(CommentNotExistException::new);
     }
 }
