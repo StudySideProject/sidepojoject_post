@@ -57,17 +57,15 @@ public class PostService {
         Post post = validateCheck.getPostIfExists(id);
 
         // 게시글 상세 조회 시 댓글도 함께 조회
-        List<Comment> comments = commentRepository.findByPostId(id);
-        List<CommentResDto> commentList = new ArrayList<>();
-        for (Comment comment : comments) {
-            commentList.add(CommentResDto.builder()
-                    .id(comment.getId())
-                    .commenter(comment.getMember().getEmail())
-                    .content(comment.getContent())
-                    .modifiedAt(comment.getModifiedAt())
-                    .build()
-            );
-        }
+        List<CommentResDto> commentList = commentRepository.findByPostId(id)
+                .stream()
+                .map(comment -> CommentResDto.builder()
+                        .id(comment.getId())
+                        .commenter(comment.getMember().getEmail())
+                        .content(comment.getContent())
+                        .modifiedAt(comment.getModifiedAt())
+                        .build())
+                .toList();
 
         return PostResponseDto.builder()
                 .id(post.getId())

@@ -10,9 +10,6 @@ import com.example.study_sideproject.post.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +22,18 @@ public class CommentService {
     public void createComment(Long postId, CommentReqDto commentReqDto) {
         Member member = validateCheck.getMemberIfExists();
         Post post = validateCheck.getPostIfExists(postId);
-
-        Comment comment = Comment.builder()
-                .content(commentReqDto.getContent())
-                .member(member)
-                .post(post)
-                .build();
-        commentRepository.save(comment);
+        Comment parentComment = null;
+        Long parentId = commentReqDto.getParentId();
+        if (parentId != null) {
+            parentComment = validateCheck.getCommentIfExists(parentId);
+        }
+            Comment comment = Comment.builder()
+                    .content(commentReqDto.getContent())
+                    .member(member)
+                    .post(post)
+                    .parent(parentComment)
+                    .build();
+            commentRepository.save(comment);
     }
 
     //댓글 수정
