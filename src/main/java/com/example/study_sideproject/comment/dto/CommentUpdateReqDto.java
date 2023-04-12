@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentReqDto {
-
-    private Long parentId;
+public class CommentUpdateReqDto {
 
     @Size(min = 3, max = 100) // 유효성 검사를 위해 사용
     private String content;

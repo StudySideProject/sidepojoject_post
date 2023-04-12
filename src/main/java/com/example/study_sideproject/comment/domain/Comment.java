@@ -1,6 +1,6 @@
 package com.example.study_sideproject.comment.domain;
 
-import com.example.study_sideproject.comment.dto.CommentReqDto;
+import com.example.study_sideproject.comment.dto.CommentUpdateReqDto;
 import com.example.study_sideproject.global.BaseTimeEntity;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.domain.Post;
@@ -43,7 +43,7 @@ public class Comment extends BaseTimeEntity {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Comment> child = new ArrayList<>();
 
-    public void updateComment (CommentReqDto commentReqDto){
-        this.content = commentReqDto.getContent();
+    public void updateComment (CommentUpdateReqDto commentUpdateReqDto){
+        this.content = commentUpdateReqDto.getContent();
     }
 }

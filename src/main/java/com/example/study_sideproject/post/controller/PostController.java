@@ -40,7 +40,7 @@ public class PostController {
 
     // 게시글 수정
     @PutMapping("/posts/{id}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long id, @RequestBody PostReqDto postReqDto) {
+    public ResponseEntity<Void> updatePost(@PathVariable Long id, @RequestBody @Valid PostReqDto postReqDto) {
         postService.updatePost(id, postReqDto);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
