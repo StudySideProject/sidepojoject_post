@@ -2,7 +2,6 @@ package com.example.study_sideproject.comment.service;
 
 import com.example.study_sideproject.comment.domain.Comment;
 import com.example.study_sideproject.comment.dto.CommentReqDto;
-import com.example.study_sideproject.comment.dto.CommentUpdateReqDto;
 import com.example.study_sideproject.comment.dto.ReCommentResDto;
 import com.example.study_sideproject.comment.repository.CommentRepository;
 import com.example.study_sideproject.global.ValidateCheck;
@@ -42,10 +41,10 @@ public class CommentService {
 
     //댓글 수정
     @Transactional
-    public void updateComment(Long commentId, CommentUpdateReqDto commentUpdateReqDto) {
+    public void updateComment(Long commentId, CommentReqDto commentReqDto) {
         validateCheck.validateCommenter(commentId);
         Comment comment = validateCheck.getCommentIfExists(commentId);
-        comment.updateComment(commentUpdateReqDto);
+        comment.updateComment(commentReqDto);
     }
 
     // 댓글 삭제

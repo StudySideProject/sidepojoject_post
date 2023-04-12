@@ -1,7 +1,6 @@
 package com.example.study_sideproject.comment.controller;
 
 import com.example.study_sideproject.comment.dto.CommentReqDto;
-import com.example.study_sideproject.comment.dto.CommentUpdateReqDto;
 import com.example.study_sideproject.comment.dto.ReCommentResDto;
 import com.example.study_sideproject.comment.service.CommentService;
 import jakarta.validation.Valid;
@@ -28,8 +27,8 @@ public class CommentController {
     //댓글 수정
     @PutMapping("/comments/{commentId}")
     public ResponseEntity<Void> updateComment(@PathVariable Long commentId,
-                                              @RequestBody @Valid CommentUpdateReqDto commentUpdateReqDto){
-        commentService.updateComment(commentId, commentUpdateReqDto);
+                                              @RequestBody @Valid CommentReqDto commentReqDto){
+        commentService.updateComment(commentId, commentReqDto);
         return ResponseEntity.ok().body(null);
     }
 
