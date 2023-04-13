@@ -1,17 +1,21 @@
 package com.example.study_sideproject.comment.dto;
 
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class CommentReqDto {
-
+@AllArgsConstructor
+public class ReCommentResDto {
+    private Long id;
     private Long parentId;
-
-    @Size(min = 3, max = 100) // 유효성 검사를 위해 사용
+    private String commenter;
     private String content;
+    private LocalDateTime modifiedAt;
+
 }

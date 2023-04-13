@@ -1,11 +1,9 @@
 package com.example.study_sideproject.post.service;
 
-import com.example.study_sideproject.comment.domain.Comment;
 import com.example.study_sideproject.comment.dto.CommentResDto;
 import com.example.study_sideproject.comment.repository.CommentRepository;
 import com.example.study_sideproject.global.ValidateCheck;
 import com.example.study_sideproject.member.domain.Member;
-import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.dto.request.PostReqDto;
 import com.example.study_sideproject.post.dto.response.AllPostResDto;
@@ -15,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // final이나 @NonNull인 필드 값만 파라미터로 받는 생성자 생성
@@ -57,17 +52,15 @@ public class PostService {
         Post post = validateCheck.getPostIfExists(id);
 
         // 게시글 상세 조회 시 댓글도 함께 조회
-        List<Comment> comments = commentRepository.findByPostId(id);
-        List<CommentResDto> commentList = new ArrayList<>();
-        for (Comment comment : comments) {
-            commentList.add(CommentResDto.builder()
-                    .id(comment.getId())
-                    .commenter(comment.getMember().getEmail())
-                    .content(comment.getContent())
-                    .modifiedAt(comment.getModifiedAt())
-                    .build()
-            );
-        }
+        List<CommentResDto> commentList = commentRepository.findByPostIdAndParentIdNull(id)
+                .stream()
+                .map(comment -> CommentResDto.builder()
+                        .id(comment.getId())
+                        .commenter(comment.getMember().getEmail())
+                        .content(comment.getContent())
+                        .modifiedAt(comment.getModifiedAt())
+                        .build())
+                .toList();
 
         return PostResponseDto.builder()
                 .id(post.getId())

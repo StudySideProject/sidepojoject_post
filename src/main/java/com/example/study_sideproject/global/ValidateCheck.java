@@ -5,12 +5,12 @@ import com.example.study_sideproject.comment.repository.CommentRepository;
 import com.example.study_sideproject.global.exception.CustomException;
 import com.example.study_sideproject.global.exception.ErrorCode;
 import com.example.study_sideproject.global.exception.customException.CommentNotExistException;
+import com.example.study_sideproject.global.exception.customException.MemberInfoNotExistException;
+import com.example.study_sideproject.global.exception.customException.PostInfoNotExistException;
 import com.example.study_sideproject.global.jwt.SecurityUtil;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
-import com.example.study_sideproject.global.exception.customException.MemberInfoNotExistException;
-import com.example.study_sideproject.global.exception.customException.PostInfoNotExistException;
 import com.example.study_sideproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -56,5 +56,12 @@ public class ValidateCheck {
     //댓글이 존재하는지 확인
     public Comment getCommentIfExists(Long id) {
         return commentRepository.findById(id).orElseThrow(CommentNotExistException::new);
+    }
+
+    // 부모 댓글과 자식 댓글의 게시글 번호가 일치하는지 확인
+    public void validatePostIdMatch(Long postId, Long parentId) {
+        Long parentPostId = getCommentIfExists(parentId).getPost().getId();
+        if (!parentPostId.equals(postId))
+            throw new CustomException(ErrorCode.POST_ID_NOT_MATCH_WITH_PARENTCOMMENT);
     }
 }

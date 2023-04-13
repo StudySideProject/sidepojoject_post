@@ -32,7 +32,8 @@ public enum ErrorCode {
 
 	//댓글
 	COMMENT_NOT_EXIST(HttpStatus.BAD_REQUEST, "C01", "댓글이 존재하지 않습니다."),
-	NOT_COMMENTER(HttpStatus.UNAUTHORIZED, "C02", "댓글 작성자가 아닙니다.");
+	NOT_COMMENTER(HttpStatus.UNAUTHORIZED, "C02", "댓글 작성자가 아닙니다."),
+	POST_ID_NOT_MATCH_WITH_PARENTCOMMENT(HttpStatus.BAD_REQUEST, "C03", "부모 댓글의 게시글 번호와 일치하지 않습니다.");
 
 	private final HttpStatus httpStatus;
 	private final String code;

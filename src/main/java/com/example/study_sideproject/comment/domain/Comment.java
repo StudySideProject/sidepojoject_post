@@ -4,14 +4,14 @@ import com.example.study_sideproject.comment.dto.CommentReqDto;
 import com.example.study_sideproject.global.BaseTimeEntity;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.domain.Post;
-import com.example.study_sideproject.post.dto.request.PostReqDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -34,6 +34,14 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<Comment> child = new ArrayList<>();
 
     public void updateComment (CommentReqDto commentReqDto){
         this.content = commentReqDto.getContent();

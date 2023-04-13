@@ -1,13 +1,15 @@
 package com.example.study_sideproject.comment.controller;
 
 import com.example.study_sideproject.comment.dto.CommentReqDto;
+import com.example.study_sideproject.comment.dto.ReCommentResDto;
 import com.example.study_sideproject.comment.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +26,8 @@ public class CommentController {
 
     //댓글 수정
     @PutMapping("/comments/{commentId}")
-    public ResponseEntity<CommentReqDto> updateComment(@PathVariable Long commentId,
-                                                             @RequestBody @Valid CommentReqDto commentReqDto){
+    public ResponseEntity<Void> updateComment(@PathVariable Long commentId,
+                                              @RequestBody @Valid CommentReqDto commentReqDto){
         commentService.updateComment(commentId, commentReqDto);
         return ResponseEntity.ok().body(null);
     }
@@ -35,5 +37,11 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    //대댓글 조회
+    @GetMapping("comments/{parentId}")
+    public ResponseEntity<List<ReCommentResDto>> getReComments(@PathVariable Long parentId) {
+       return ResponseEntity.ok().body(commentService.getReComments(parentId));
     }
 }
