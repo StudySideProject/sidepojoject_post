@@ -14,6 +14,7 @@ import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Component
 @RequiredArgsConstructor

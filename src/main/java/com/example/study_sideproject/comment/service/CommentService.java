@@ -5,6 +5,8 @@ import com.example.study_sideproject.comment.dto.CommentReqDto;
 import com.example.study_sideproject.comment.dto.ReCommentResDto;
 import com.example.study_sideproject.comment.repository.CommentRepository;
 import com.example.study_sideproject.global.ValidateCheck;
+import com.example.study_sideproject.global.exception.CustomException;
+import com.example.study_sideproject.global.exception.ErrorCode;
 import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.post.domain.Post;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ public class CommentService {
                 .member(member)
                 .post(post)
                 .parent(parentComment)
+                .isDeleted(false)
                 .build();
         commentRepository.save(comment);
     }
@@ -52,14 +55,22 @@ public class CommentService {
     public void deleteComment(Long commentId) {
         validateCheck.validateCommenter(commentId);
         Comment comment = validateCheck.getCommentIfExists(commentId);
-        commentRepository.deleteById(comment.getId());
+
+        if (comment.getParent() == null) {
+            comment.deleteComments();
+        } else {
+            commentRepository.deleteById(comment.getId());
+        }
+
     }
 
     // 대댓글 조회
     @Transactional(readOnly = true)
     public List<ReCommentResDto> getReComments(Long parentId) {
-        validateCheck.getCommentIfExists(parentId);
-
+        Comment comments = validateCheck.getCommentIfExists(parentId);
+        if (comments.getChild().isEmpty()) {
+            throw new CustomException(ErrorCode.RECOMMENT_NOT_EXIST);
+        }
         return commentRepository.findByParentId(parentId).
                 stream().map(comment -> ReCommentResDto.builder()
                         .id(comment.getId())
