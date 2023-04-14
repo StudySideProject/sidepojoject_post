@@ -43,7 +43,15 @@ public class Comment extends BaseTimeEntity {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Comment> child = new ArrayList<>();
 
+    @Column(nullable = false)
+    private boolean isDeleted;
+
     public void updateComment (CommentReqDto commentReqDto){
         this.content = commentReqDto.getContent();
+    }
+
+    public void deleteComments () {
+        this.isDeleted = true;
+        this.content = "삭제된 댓글입니다.";
     }
 }

@@ -17,5 +17,4 @@ public class ReCommentResDto {
     private String commenter;
     private String content;
     private LocalDateTime modifiedAt;
-
 }
