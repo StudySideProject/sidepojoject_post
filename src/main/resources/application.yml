@@ -81,6 +81,7 @@ server:
 logging:
   level:
     org:
+      # TRACE  <  DEBUG  <  INFO  <  WARN  <  ERROR < OFF
       springframework: DEBUG
 
 
