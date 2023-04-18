@@ -4,6 +4,7 @@ import com.example.study_sideproject.post.dto.request.PostReqDto;
 import com.example.study_sideproject.post.dto.response.AllPostResDto;
 import com.example.study_sideproject.post.dto.response.PostResponseDto;
 import com.example.study_sideproject.post.service.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "포스트 컨트롤러")
 @RestController
 @RequiredArgsConstructor
 public class PostController {

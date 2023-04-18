@@ -7,42 +7,42 @@ spring:
       path: /h2-console
 
 #
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-    defer-datasource-initialization: true
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    password:
+#
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        show_sql: true
+#    defer-datasource-initialization: true
 
 
     # MySQL
 
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: ${DB_URL}
-#    username: ${DB_USERNAME}
-#    password: ${DB_PASSWORD}
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    properties:
-#      database: mysql
-#      hibernate:
-#        show_sql: true
-#        format_sql: true
-#        use_sql_comments: true
-#        dialect: org.hibernate.dialect.MySQLDialect
-#    generate-ddl: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      database: mysql
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
 
   mvc:
     path-match:
@@ -81,6 +81,7 @@ server:
 logging:
   level:
     org:
+      # TRACE  <  DEBUG  <  INFO  <  WARN  <  ERROR < OFF
       springframework: DEBUG
 
 
