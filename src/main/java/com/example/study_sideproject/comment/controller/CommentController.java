@@ -3,6 +3,7 @@ package com.example.study_sideproject.comment.controller;
 import com.example.study_sideproject.comment.dto.CommentReqDto;
 import com.example.study_sideproject.comment.dto.ReCommentResDto;
 import com.example.study_sideproject.comment.service.CommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "코멘트 컨트롤러")
 @RestController
 @RequiredArgsConstructor
 public class CommentController {

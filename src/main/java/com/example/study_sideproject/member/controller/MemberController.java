@@ -6,6 +6,7 @@ import com.example.study_sideproject.member.dto.request.EmailCheckRequestDto;
 import com.example.study_sideproject.member.dto.request.LoginReqDto;
 import com.example.study_sideproject.member.dto.request.MemberReqDto;
 import com.example.study_sideproject.member.service.MemberService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "멤버 컨트롤러")
 @RequiredArgsConstructor
 @RestController
 public class MemberController {
@@ -59,7 +61,7 @@ public class MemberController {
     //이메일 중복 확인
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/emailcheck")
-    public ResponseEntity<?> emailCheck(@Valid @RequestBody EmailCheckRequestDto emailCheckRequestDto){
+    public ResponseEntity<Void> emailCheck(@Valid @RequestBody EmailCheckRequestDto emailCheckRequestDto){
         memberService.emailCheck(emailCheckRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
