@@ -12,6 +12,8 @@ import com.example.study_sideproject.member.domain.Member;
 import com.example.study_sideproject.member.repository.MemberRepository;
 import com.example.study_sideproject.post.domain.Post;
 import com.example.study_sideproject.post.repository.PostRepository;
+import com.example.study_sideproject.postLike.domain.PostLike;
+import com.example.study_sideproject.postLike.repository.PostLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +24,7 @@ public class ValidateCheck {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final PostLikeRepository postLikeRepository;
 
     // 유효한 멤버인지 검증
     public Member getMemberIfExists() {
@@ -64,5 +67,10 @@ public class ValidateCheck {
         Long parentPostId = getCommentIfExists(parentId).getPost().getId();
         if (!parentPostId.equals(postId))
             throw new CustomException(ErrorCode.POST_ID_NOT_MATCH_WITH_PARENTCOMMENT);
+    }
+
+    // 게시글 좋아요가 되어 있는지 확인
+    public PostLike getPostLikeIfExists(Long memberId, Long postId) {
+        return postLikeRepository.findByMemberIdAndPostId(memberId, postId).orElse(null);
     }
 }
